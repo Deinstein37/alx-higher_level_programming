@@ -1,8 +1,4 @@
 #!/bin/bash
-<<<<<<< HEAD
 
-echo "python3">> $PYFILE
-python3
-=======
-python3 $PYFILE
->>>>>>> 7ae1eefb4c69903b7d99f4b536d8c14760208077
+echo "python3 $PYFILE"
+
