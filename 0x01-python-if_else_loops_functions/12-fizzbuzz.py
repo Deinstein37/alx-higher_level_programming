@@ -2,6 +2,7 @@
 # 12-fizzbuzz.py
 # Brennan D Baraban <375@holbertonschool.com>
 
+
 def fizzbuzz():
     """Print the numbers from 1 to 100 separated by a space.
 
@@ -16,5 +17,5 @@ def fizzbuzz():
             print("Fizz ", end="")
         elif number % 5 == 0:
             print("Buzz ", end="")
-        else:                                
+        else:                               
             print("{} ".format(number), end="")
