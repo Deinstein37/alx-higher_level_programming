@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
         def add_():
             total = add(num1, num2)
-            print("{:d} + {:d} = {:d}".format(num1, num2, total)
+            print("{:d} + {:d} = {:d}".format(num1, num2, total))
             return total
 
         def sub_():
