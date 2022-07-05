@@ -2,20 +2,27 @@
 
 /**
  * is_palindrome - check if a linked list is a palindrome
- * @head: pointer to head of list
- * Return: 0 or 1
+ * @head: the head node passed to us
+ *
+ * Return: 0 if not, 1 if palindrome
  */
+
 int is_palindrome(listint_t **head)
 {
-    const listint_t *current;
-    const listint_t *tail;
-    unsigned int n = 0;
+	short i, j;
+	short count = 0;
+	int array[3000];
 
-    //Get length
-    //Use a function to get a node on a specific index
-    //check the first to the last and, second to second last ....
-    //return false if one check was False
-    //return true at the end (if all passed the checks)
- 
-    return (n);
- }
+	if (!head || !(*head) || (*head)->next == NULL)
+		return (1);
+	while (*head)
+	{
+		array[count] = (*head)->n;
+		*head = (*head)->next;
+		count++;
+	}
+	for (i = 0, j = count - 1; i < count / 2 + 1; i++, j--)
+		if (array[i] != array[j])
+			return (0);
+	return (1);
+}
