@@ -1,70 +1,68 @@
 #!/usr/bin/python3
-class Square():
-    '''
-        Defining a Square
-    '''
+"""
+This module defines a Square class
 
+Its implements value and type checks for its attributes
+Attributes:
+    area
+    my_print
+"""
+
+
+class Square:
+    """Square implementation
+    """
     def __init__(self, size=0, position=(0, 0)):
-        '''Initialization of instance attributes
-            Args:
-            size (int): Zero or positve number.
-        '''
         self.size = size
         self.position = position
 
-    def area(self):
-        '''Calculates the area
+    def __str__(self):
 
-            Return: The current square area.
-        '''
-        return self.__size * self.__size
+        txt = ''
+        if (self.__size == 0):
+            pass
+        else:
+            for i in range(self.position[1]):
+                txt += '\n'
+
+            for i in range(self.size):
+                txt += ' ' * self.position[0] + '#' * self.size
+
+        return txt
 
     @property
     def size(self):
         return self.__size
 
     @size.setter
-    def size(self, value):
-        '''Updating the private attributes
-            Args:
-            value (int): Zero or positve number.
-        '''
-        if not isinstance(value, int):
-            raise TypeError("size must be an integer")
-        if value < 0:
-            raise ValueError("size must be >= 0")
-        self.__size = value
+    def size(self, size):
+        if type(size) != int:
+            raise TypeError('size must be an integer')
+        elif size < 0:
+            raise ValueError('size must be >= 0')
+        self.__size = size
+
+    def area(self):
+        """calculates the square area
+        """
+        return (self.size ** 2)
+
+    def my_print(self):
+        """prints a square  with the corresponding size
+        """
+        print(self.__str__())
 
     @property
     def position(self):
         return self.__position
 
     @position.setter
-    def position(self, value):
-        '''Updating the private attributes
-            Args:
-            value (int): tuple of two positve numbers.
-        '''
-        if isinstance(value, tuple) and len(value) == 2:
-                if isinstance(value[0], int) and isinstance(value[1], int):
-                    if value[0] >= 0 and value[1] >= 0:
-                        self.__position = value
-                        return
-        raise TypeError("position must be a tuple of 2 positive integers")
+    def position(self, position):
+        if type(position) != tuple or \
+            len(position) != 2 or \
+            not all(isinstance(el, int) for el in position) or \
+                not all(el >= 0 for el in position):
 
-    def my_print(self):
-        '''
-            prints in stdout the square with the character # or a new line
-            is size is zero.
-        '''
-        if self.__size == 0:
-            return ""
+            raise TypeError('position must be a tuple of 2 positive integers')
 
-        for line in range(self.__position[1]):
-                print()
-        for col in range(self.__size - 1):
-            print("{}{}".format(" " * self.__position[0], "#" * self.__size))
-        return "{}{}".format(" " * self.__position[0], "#" * self.__size)
-
-    def __str__(self):
-        return self.my_print()
+        self.__position = position
