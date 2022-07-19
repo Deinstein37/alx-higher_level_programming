@@ -8,7 +8,6 @@ Attributes:
     my_print
 """
 
-
 class Square:
     """Square implementation
     """
