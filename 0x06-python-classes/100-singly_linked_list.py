@@ -1,77 +1,111 @@
 #!/usr/bin/python3
-class Node():
-    '''Describes a node
-        Args:
-        data (int): Integer representing the data for the node
-        next_node (Node): Represents the next node in the list
-    '''
+"""defining a square"""
+
+
+class Node:
+    """ represents a square
+
+    Attributes:
+        ___size (int): size of a side of the square
+        ___position (tuple): pos of the square
+    """
     def __init__(self, data, next_node=None):
         self.data = data
         self.next_node = next_node
 
     @property
     def data(self):
+        """getter of __data
+        Returns:
+            data stored inside the node
+        """
         return self.__data
 
     @data.setter
     def data(self, value):
-        '''
-         Updates the value for the data
-        '''
-        if not isinstance(value, int):
+        """setter of __data
+        Args:
+            value (int): data stored insite the node
+        Returns:
+            None
+        """
+        if type(value) is not int:
             raise TypeError("data must be an integer")
         self.__data = value
 
     @property
     def next_node(self):
+        """getter of __next_node
+        Returns:
+           the next node in the linked list
+        """
         return self.__next_node
 
     @next_node.setter
     def next_node(self, value):
-        if value is not None and not isinstance(value, Node):
+        """setter of __next_node
+        Args:
+            value (Node): next node in the linked list
+        Returns:
+            None
+        """
+        if value is not None and type(value) is not Node:
             raise TypeError("next_node must be a Node object")
-        self.__next_node = value
+        else:
+            self.__next_node = value
+
+    def __str__(self):
+        """String representation of Node instance
+        Returns:
+            Formatted string representing the node
+        """
+        return str(self.__data)
 
 
-class SinglyLinkedList():
-    '''
-        Inserts a node into a liked list
-    '''
+class SinglyLinkedList:
+    """Represents a single linked list
+    Attributes:
+        __head (Node): head of the linked list
+    """
     def __init__(self):
+        """Initializes the linked list
+        Returns:
+            None
+        """
         self.__head = None
 
     def sorted_insert(self, value):
-        '''
-            Inserts the nodes in a sorted fashion in increasing order
-            Args:
-                Value (int): The value of the node
-        '''
-        node = Node(value)
+        """ inserts a new Node instance into the correct sorted position
+        Args:
+            value (int): data stored inside the new node
+        Returns:
+            None
+        """
+        new = Node(value)
         tmp = self.__head
-        # Checks if the head is None to then add the first node.
-        if self.__head is None:
-            self.__head = node
+
+        if tmp is None or tmp.data >= value:
+            if tmp:
+                new.next_node = tmp
+            self.__head = new
             return
-        # Checks if the first node is less than the new node.
-        if node.data < tmp.data:
-            node.next_node = tmp
-            self.__head = node
-            return
-        # Iterates and checks if the next node is more or less than new node.
         while tmp.next_node is not None:
-            if tmp.next_node.data < node.data:
-                tmp = tmp.next_node
-            else:
-                node.next_node = tmp.next_node
-                tmp.next_node = node
-                return
-        tmp.next_node = node
+            if tmp.next_node.data >= value:
+                break
+            tmp = tmp.next_node
+        new.next_node = tmp.next_node
+        tmp.next_node = new
 
     def __str__(self):
+        """String representation of SinglyLinkedList instance
+        Returns:
+            Formatted string representing the linked list
+        """
+        string = ""
         tmp = self.__head
-        if tmp is None:
-            return ("")
-        while tmp.next_node is not None and tmp:
-            print(tmp.data)
+        while tmp is not None:
+            string += str(tmp)
+            if tmp.next_node is not None:
+                string += "\n"
             tmp = tmp.next_node
-        return (str(tmp.data))
+        return string
