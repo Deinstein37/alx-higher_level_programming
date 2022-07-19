@@ -1,0 +1,21 @@
+#!/usr/bin/python3
+SinglyLinkedList = __import__('100-singly_linked_list').SinglyLinkedList
+
+print("AAAAA")
+sll = SinglyLinkedList()
+print("BBBBB")
+sll.insert_at_end(2)
+print("CCCCC")
+sll.insert_at_end(6)
+sll.insert_at_end(3)
+sll.insert_at_end(10)
+sll.insert_at_end(1)
+sll.insert_at_end(-4)
+sll.insert_at_end(-3)
+sll.insert_at_end(4)
+sll.insert_at_end(5)
+sll.insert_at_end(12)
+print("XXXXX")
+sll.insert_at_end(3)
+print("ZZZZZ")
+print(sll)
