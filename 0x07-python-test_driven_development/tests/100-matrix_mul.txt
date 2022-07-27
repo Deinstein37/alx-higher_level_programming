@@ -4,6 +4,12 @@ The ``100-matrix_mul`` module
 Using ``matrix_mul``
 -------------------
 
+Write a function that prints My name is <first name> <last name>
+
+    Prototype: def matrix_mul(first_name, last_name=""):
+    first_name and last_name must be strings otherwise, raise a TypeError exception with the message first_name must be a string or last_name must be a string
+    You are not allowed to import any module
+
 Importing the function from the module:
 	>>> matrix_mul = __import__("100-matrix_mul").matrix_mul
 
