@@ -7,7 +7,7 @@ doesn't print any spaces at the beginning or end of the sentences.
 
 
 def text_indentation(text):
-    """
+"""
     text_indentation function:
     checks to see if input is valid
     adds two new lines after any instances of `?` or `.` or `:`
