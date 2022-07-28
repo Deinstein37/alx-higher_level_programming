@@ -1,8 +1,26 @@
 #!/usr/bin/python3
-""" Doc """
-text_indentation = __import__('5-text_indentation').text_indentation
+"""
+This is the "5-test_indentation" module.
 
-try:
-    text_indentation(12)
-except Exception as e:
-    print(e)
+The 5-text_indentation module supplies one function, text_indentation(text).
+"""
+
+
+def text_indentation(text):
+    """splits a text into lines along "?", ":", "." followed by 2 new lines"""
+    if type(text) is not str:
+        raise TypeError("text must be a string")
+    flag = 0
+    for a in text:
+        if flag == 0:
+            if a == ' ':
+                continue
+            else:
+                flag = 1
+        if flag == 1:
+            if a == '?' or a == '.' or a == ':':
+                print(a)
+                print()
+                flag = 0
+            else:
+                print(a, end="")
