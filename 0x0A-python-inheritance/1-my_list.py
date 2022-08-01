@@ -1,13 +1,15 @@
 #!/usr/bin/python3
-
-'''
-    Inherits  from a list
-'''
+"""
+ MyList that inherits from list
+"""
 
 
 class MyList(list):
-    '''
-        Prints a sorted list without changing the original
-    '''
+    """"subclas"""
+    def __init__(self):
+        """"initializes the object"""
+        super().__init__()
+
     def print_sorted(self):
+        """"print sorted"""
         print(sorted(self))
