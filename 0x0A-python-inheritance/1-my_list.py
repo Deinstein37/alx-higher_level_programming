@@ -1,15 +1,12 @@
 #!/usr/bin/python3
-"""
- MyList that inherits from list
-"""
+""" Class: MyList """
 
 
 class MyList(list):
-    """"subclas"""
+    """ implement method(print_sorted) """
     def __init__(self):
-        """"initializes the object"""
         super().__init__()
 
     def print_sorted(self):
-        """"print sorted"""
+        """ prints an assorted list of type int """
         print(sorted(self))
