@@ -1,15 +1,13 @@
 #!/usr/bin/python3
-"""
-Myint class
-"""
-
-
 class MyInt(int):
-    """"""
+    """Inherits from int
+    """
     def __eq__(self, other):
-        if isinstance(self, type(other)):
-            return False
+        """Inverts eq
+        """
+        return super(MyInt, self).__ne__(other)
 
     def __ne__(self, other):
-        if isinstance(self, type(other)):
-            return True
+        """Inverts ne
+        """
+        return super(MyInt, self).__eq__(other)
