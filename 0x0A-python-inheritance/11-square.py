@@ -1,26 +1,21 @@
 #!/usr/bin/python3
 """
-This module implements a Square object
+class BaseGeometry
 """
-
-
-Rectangle = __import__('9-rectangle').Rectangle
+Rectangle = __import__("9-rectangle").Rectangle
 
 
 class Square(Rectangle):
+    """represents a square"""
     def __init__(self, size):
-        """initialization
-
-        Args:
-            size (int): size
-        """
-        super().__init__(size, size)
+        """validates values"""
+        self.integer_validator("size", size)
         self.__size = size
+        super().__init__(size, size)
+
+    def area(self):
+        """return square area"""
+        return self.__size ** 2
 
     def __str__(self):
-        """string representation
-
-        Returns:
-            str: string
-        """
-        return "[Square] {:d}/{:d}".format(self.__size, self.__size)
+        return "[Square] {}/{}".format(self.__size, self.__size)
