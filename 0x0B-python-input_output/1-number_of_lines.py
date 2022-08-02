@@ -1,9 +1,13 @@
 #!/usr/bin/python3
-"""write file"""
+"""1-number_of_lines module
+"""
 
 
-def write_file(filename="", text=""):
-    """"write file"""
-    with open(filename, mode="w", encoding="utf-8") as fd:
-        fd.write(text)
-    return len(text)
+def number_of_lines(filename=""):
+    """Returns number of lines in text file
+    """
+    line_num = 0
+    with open(filename, encoding="utf8") as f:
+        for line in f:
+            line_num += 1
+    return line_num
