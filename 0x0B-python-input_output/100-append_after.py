@@ -1,16 +1,21 @@
 #!/usr/bin/python3
-"""append after module"""
+"""
+student class
+"""
 
 
 def append_after(filename="", search_string="", new_string=""):
-    """append a text after a substring line"""
+    """appends a new line afther a specific line as a parameter"""
+    with open(filename, "r", encoding="utf8") as file:
+        new_list = []
+        while True:
+            line = file.readline()
+            if line == "":
+                break
+            new_list.append(line)
 
-    with open(filename, 'r') as f:
-        content = f.readlines()
-        for (index, line) in enumerate(content):
-            if line.find(search_string) != -1:
-                content.insert(index+1, new_string)
-        new_content = "".join(content)
-    f = open(filename, 'w')
-    f.write(new_content)
-    f.close()
+            if search_string in line:
+                new_list.append(new_string)
+
+    with open(filename, 'w', encoding="utf8") as file:
+        file.writelines(new_list)
