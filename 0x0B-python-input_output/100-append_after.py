@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-def append_after(filename="", search_string="", new_string=""):
-    '''
-        Appends a string after finding a keyword
-    '''
-    my_str = ""
-    with open(filename, encoding="utf8") as fd:
-        for line in fd:
-            my_str += line
-            if search_string in line:
-                my_str += new_string
+"""append after module"""
 
-    with open(filename, mode="w") as fd:
-        fd.write(my_str)
+
+def append_after(filename="", search_string="", new_string=""):
+    """append a text after a substring line"""
+
+    with open(filename, 'r') as f:
+        content = f.readlines()
+        for (index, line) in enumerate(content):
+            if line.find(search_string) != -1:
+                content.insert(index+1, new_string)
+        new_content = "".join(content)
+    f = open(filename, 'w')
+    f.write(new_content)
+    f.close()
