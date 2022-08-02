@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Contains the "seven_add_items" function
+Contains the "save_to_json_file" function
 """
 
 import json
