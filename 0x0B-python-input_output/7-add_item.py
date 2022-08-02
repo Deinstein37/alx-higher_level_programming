@@ -1,6 +1,13 @@
 #!/usr/bin/python3
-def save_to_json_file(my_obj, filename):
-    from json import dumps
-    with open(filename, 'w', encoding="utf-8") as f:
-        f.write(dumps(my_obj))
-        f.close()
+"""add item"""
+
+
+import json
+
+filename = "add_item.json"
+if os.path.isfile(filename):
+    obj = load_from_json_file(filename)
+else:
+    obj = []
+obj.extend(sys.argv[1:])
+save_to_json_file(obj, filename)
