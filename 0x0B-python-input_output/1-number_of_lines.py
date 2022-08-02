@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-def number_of_lines(filename=""):
-    '''
-        Counts and returns the number of lines in a file
-    '''
-    l_count = 0
+"""write file"""
 
-    with open(filename, encoding="utf-8") as fd:
-        for line in fd:
-            l_count += 1
-    return l_count
+
+def write_file(filename="", text=""):
+    """"write file"""
+    with open(filename, mode="w", encoding="utf-8") as fd:
+        fd.write(text)
+    return len(text)
