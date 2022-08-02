@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-def append_write(filename="", text=""):
-    with open(filename, mode="a") as fd:
-        x = fd.write(text)
-    return x
+"""from json"""
+import json
+
+
+def from_json_string(my_str):
+    """from json string"""
+    return json.loads(my_str)
