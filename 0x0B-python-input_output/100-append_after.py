@@ -1,14 +1,21 @@
 #!/usr/bin/python3
-def append_after(filename="", search_string="", new_string=""):
-    '''
-        Appends a string after finding a keyword
-    '''
-    my_str = ""
-    with open(filename, encoding="utf8") as fd:
-        for line in fd:
-            my_str += line
-            if search_string in line:
-                my_str += new_string
+"""
+student class
+"""
 
-    with open(filename, mode="w") as fd:
-        fd.write(my_str)
+
+def append_after(filename="", search_string="", new_string=""):
+    """appends a new line afther a specific line as a parameter"""
+    with open(filename, "r", encoding="utf8") as file:
+        new_list = []
+        while True:
+            line = file.readline()
+            if line == "":
+                break
+            new_list.append(line)
+
+            if search_string in line:
+                new_list.append(new_string)
+
+    with open(filename, 'w', encoding="utf8") as file:
+        file.writelines(new_list)
