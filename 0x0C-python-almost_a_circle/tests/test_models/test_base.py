@@ -1,174 +1,107 @@
 #!/usr/bin/python3
-"""
-Test differents behaviors of the Base class
-"""
-import unittest
-import pep8
-import os
 from models.base import Base
 from models.rectangle import Rectangle
 from models.square import Square
+import os
+import unittest
 
 
 class TestBase(unittest.TestCase):
-    """
-    A class to test Base Class
-    """
-    def test_pep8_base(self):
-        """
-        Test that checks PEP8
-        """
-        syntax = pep8.StyleGuide(quit=True)
-        check = syntax.check_files(['models/base.py'])
-        self.assertEqual(
-            check.total_errors, 0,
-            "Found code style errors (and warnings)."
-        )
+    """ Testing implementation of a class: Base """
+    def setUp(self):
+        Base._reset()
 
-    def test_id_as_positive(self):
-        """
-        Test for positive Base Class id
-        """
-        base_instance = Base(110)
-        self.assertEqual(base_instance.id, 110)
-        base_instance = Base(30)
-        self.assertEqual(base_instance.id, 30)
+    def test_normal(self):
+        self.base = Base(5)
+        self.assertEqual(self.base.id, 5)
+        """ Check if nb_objects incremented """
+        self.base = Base()
+        self.assertEqual(self.base._Base__nb_objects, 1)
+        """ See if it id is set to nb_objects """
+        self.base = Base()
+        self.assertEqual(self.base.id, 2)
 
-    def test_id_as_negative(self):
-        """
-        Test for negative Base Class id
-        """
-        base_instance = Base(-20)
-        self.assertEqual(base_instance.id, -20)
-        base_instance = Base(-10)
-        self.assertEqual(base_instance.id, -10)
+    def test_bad_type(self):
+        """ float """
+        with self.assertRaises(TypeError):
+            self.base = Base(.5)
+        """ character """
+        with self.assertRaises(TypeError):
+            self.base = Base('f')
+        with self.assertRaises(TypeError):
+            self.base = Base(float("NaN"))
+        with self.assertRaises(TypeError):
+            self.base = Base(float("Inf"))
+        with self.assertRaises(TypeError):
+            self.base = Base(-float("Inf"))
+        with self.assertRaises(TypeError):
+            self.base = Base([2])
+        with self.assertRaises(TypeError):
+            self.base = Base({2: 5})
+        with self.assertRaises(TypeError):
+            self.base = Base((1,))
 
-    def test_id_as_none(self):
-        """
-        Test for None Base Class id
-        """
-        base_instance = Base()
-        self.assertEqual(base_instance.id, 1)
-        base_instance = Base(None)
-        self.assertEqual(base_instance.id, 2)
+    def test_bad_value(self):
+        with self.assertRaises(ValueError):
+            self.base = Base(-4)
 
-    def test_string_id(self):
-        base_instance = Base("Ping Pong")
-        self.assertEqual(base_instance.id, "Ping Pong")
-        base_instance = Base("Hola soy Goku")
-        self.assertEqual(base_instance.id, "Hola soy Goku")
+    def test_arg_count(self):
+        with self.assertRaises(TypeError):
+            self.base = Base(2, 2)
 
-    def test_to_json_string(self):
-        """
-        Test to_json_string method
-        """
-        rect_instance = Rectangle(10, 17, 2, 8, 70)
-        rect_data = re1.to_dictionary()
-        json_data = Base.to_json_string([rect_data])
-        self.assertEqual(type(json_data), str)
+    def test_json(self):
+        self.base = Base()
+        """ test one dictionary """
+        dic = {'test': 1, 'test2': 2, 'test3': 3}
+        lidi = [dic]
+        json_dict = self.base.to_json_string(lidi)
+        self.assertTrue(isinstance(json_dict, str))
+        """ test multiple dictionary """
+        dic1 = {'test': 1, 'test2': 2, 'test3': 3}
+        lidi = [dic, dic1]
+        json_dict = self.base.to_json_string(lidi)
+        self.assertTrue(isinstance(json_dict, str))
+        """ test empty or None """
+        json_dict = self.base.to_json_string([])
+        self.assertEqual(json_dict, "[]")
+        json_dict = self.base.to_json_string(None)
+        self.assertEqual(json_dict, "[]")
 
-    def test_empty_to_json_string(self):
-        """
-        Test for a empty data on to_json_string method
-        """
-        empty_data = []
-        json_data = Base.to_json_string(empty_data)
-        self.assertEqual(json_data, "[]")
+    def test_json_to_file(self):
+        """ Test save_json: note* 52 characters per dict """
+        self.r1 = Rectangle(1, 2)
+        Rectangle.save_to_file([self.r1])
+        with open("Rectangle.json", "r") as f:
+            data = f.read()
+            self.assertEqual(len(data), 52)
+        self.r2 = Rectangle(3, 4)
+        Rectangle.save_to_file([self.r1, self.r2])
+        with open("Rectangle.json", "r") as f:
+            data = f.read()
+            self.assertEqual(len(data), 104)
+        """ Test empty list """
+        Rectangle.save_to_file([])
+        with open("Rectangle.json", "r") as f:
+            data = f.read()
+            self.assertEqual(len(data), 2)
 
-        empty_data = None
-        json_data = Base.to_json_string(empty_data)
-        self.assertEqual(json_data, "[]")
+    def test_from_json(self):
+        self.rec = Rectangle(1, 2)
+        li = [self.rec.to_dictionary()]
+        json_list_input = Rectangle.to_json_string(li)
+        from_json = Rectangle.from_json_string(json_list_input)
+        self.assertTrue(isinstance(from_json, list))
+        self.assertTrue(isinstance(from_json[0], dict))
+        """ Test empty or None """
+        self.assertEqual(Rectangle.from_json_string(None), [])
+        self.assertEqual(Rectangle.from_json_string("[]"), [])
 
-    def test_instance(self):
-        """
-        Test Base Class instance
-        """
-        base_instance = Base()
-        self.assertEqual(type(base_instance), Base)
-        self.assertTrue(isinstance(base_instance, Base))
-
-    def test_to_json_string(self):
-        """
-        Test a normal to_json_string functionality
-        """
-        rect_data = {'id': 31, 'x': 14, 'y': 10, 'width': 5, 'height': 5}
-        json_data = Base.to_json_string([rect_data])
-
-        self.assertTrue(isinstance(rect_data, dict))
-        self.assertTrue(isinstance(json_data, str))
-        self.assertCountEqual(
-            json_data,
-            '{["id": 31, "x": 14, "y": 10, "width": 5, "height": 5]}'
-        )
-
-    def test_wrong_to_json_string(self):
-        """
-        Test a wrong functionality of to_json_string method
-        """
-        json_data = Base.to_json_string(None)
-        self.assertEqual(json_data, "[]")
-
-        warn = ("to_json_string() missing 1 required positional argument: " +
-                "'list_dictionaries'")
-
-        with self.assertRaises(TypeError) as msg:
-            Base.to_json_string()
-
-        self.assertEqual(warn, str(msg.exception))
-
-        warn = "to_json_string() takes 1 positional argument but 2 were given"
-
-        with self.assertRaises(TypeError) as msg:
-            Base.to_json_string([{43, 87}], [{22, 17}])
-
-        self.assertEqual(warn, str(msg.exception))
-
-    def test_wrong_save_to_file(self):
-        """
-        Test save_to_file method
-        """
-        with self.assertRaises(AttributeError) as msg:
-            Base.save_to_file([Base(1), Base(2)])
-
-        #self.assertEqual(
-        #     "'Base' object has no attribute 'to_dictionary'",
-        #     str(msg.exception)
-        #)
-
-    def test_load_from_file(self):
-        """
-        Test load_from_file method
-        """
-        if os.path.exists("Base.json"):
-            os.remove("Base.json")
-
-        if os.path.exists("Rectangle.json"):
-            os.remove("Rectangle.json")
-
-        if os.path.exists("Square.json"):
-            os.remove("Square.json")
-
-        rect_output = Rectangle.load_from_file()
-        self.assertEqual(rect_output, [])
-
-        square_output = Square.load_from_file()
-        self.assertEqual(square_output, [])
-
-        warn = "load_from_file() takes 1 positional argument but 2 were given"
-
-        with self.assertRaises(TypeError) as msg:
-            Rectangle.load_from_file('Monty Python')
-
-        self.assertEqual(warn, str(msg.exception))
-
-    def test_create(self):
-        """
-        Test create method
-        """
-        with self.assertRaises(TypeError) as msg:
-            warn = Rectangle.create('Monty Python')
-
-        self.assertEqual(
-            "create() takes 1 positional argument but 2 were given",
-            str(msg.exception)
-        )
+    def test_create_cls(self):
+        """ Test the function create: returns an instance with all attributes
+        set """
+        self.r1 = Rectangle(10, 10, 10)
+        self.r1_dict = self.r1.to_dictionary()
+        self.r2 = Rectangle.create(**self.r1_dict)
+        self.assertEqual(self.r2.__str__(), "[Rectangle] (1) 10/0 - 10/10")
+        self.assertTrue(self.r2 is not self.r1)
+        self.assertTrue(self.r2 != self.r1)
