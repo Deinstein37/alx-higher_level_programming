@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-lists all State objects and corresponding City objects contained in a database
 
 import sqlalchemy
 from sqlalchemy import create_engine
