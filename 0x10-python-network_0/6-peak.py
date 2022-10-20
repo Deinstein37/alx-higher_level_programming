@@ -1,25 +1,42 @@
 #!/usr/bin/python3
+"""
+function that finds a peak in a list of unsorted
+integers
+"""
 
 
-def find_peak(nums):
-    '''
-        Finds the pick in a list of numbers
-    '''
-    length = len(nums)
-    if length == 0:
-        return None
-    if length == 1:
-        return (nums[0])
-    if length == 2:
-        return nums[0] if nums[0] >= nums[1] else nums[1]
+def find_peak(list_of_integers):
+    """
+    function to find peak
+    """
+    l = len(list_of_integers)
+    if l == 0:
+        return
+    half = l // 2
+    if (half == l - 1 or list_of_integers[half] >=
+        list_of_integers[half + 1]) and (half == 0 or list_of_integers[half] >=
+                                         list_of_integers[half - 1]):
+        return (list_of_integers[half])
+    elif half != l - 1 and list_of_integers[half + 1] > list_of_integers[half]:
+        return (find_peak(list_of_integers[half + 1:]))
+    return (find_peak(list_of_integers[:half]))
+function that finds a peak in a list of unsorted
+integers
+"""
 
-    for idx in range(0, length):
-        value = nums[idx]
-        if (idx > 0 and idx < length - 1 and
-                nums[idx + 1] <= value and nums[idx - 1] <= value):
-                return value
-        elif idx == 0 and nums[idx + 1] <= value:
-            return value
-        elif idx == length - 1 and nums[idx - 1] <= value:
-            return value
-    return pick
+
+def find_peak(list_of_integers):
+    """
+    function to find peak
+    """
+    l = len(list_of_integers)
+    if l == 0:
+        return
+    half = l // 2
+    if (half == l - 1 or list_of_integers[half] >=
+        list_of_integers[half + 1]) and (half == 0 or list_of_integers[half] >=
+                                         list_of_integers[half - 1]):
+        return (list_of_integers[half])
+    elif half != l - 1 and list_of_integers[half + 1] > list_of_integers[half]:
+        return (find_peak(list_of_integers[half + 1:]))
+    return (find_peak(list_of_integers[:half]))
